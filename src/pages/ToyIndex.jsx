@@ -2,7 +2,6 @@ import { useEffect } from "react"
 import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 
-import { toyService } from "../services/toy.service.js"
 import { showSuccessMsg, showErrorMsg } from "../services/event-bus.service.js"
 import { loadToys, removeToy, saveToy, setFilterBy } from "../store/actions/toy.actions.js"
 import { ToyFilter } from "../cmps/ToyFilter.jsx"

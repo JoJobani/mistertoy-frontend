@@ -16,3 +16,21 @@
     display: block;
     margin: auto;
 }
+
+.toy-details .btn{
+    max-width: 100px;
+}
+
+.toy-labels ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.toy-labels li {
+    display: inline-block;
+    background-color: #f0f0f0;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 15px;
+    font-size: 0.9em;
+}

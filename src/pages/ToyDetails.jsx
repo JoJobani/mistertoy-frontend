@@ -27,6 +27,16 @@ export function ToyDetails() {
             <h1>{toy.name}</h1>
             <h5>Price: {toy.price}</h5>
             <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illo laboriosam sunt vero, vitae ducimus ullam quis explicabo neque quam voluptate numquam quibusdam repellendus veniam saepe? Molestias, assumenda! Similique, praesentium facilis?</p>
+
+            <div className="toy-labels">
+                <h5>Labels:</h5>
+                <ul>
+                    {toy.labels.map((label, index) => (
+                        <li key={index}>{label}</li>
+                    ))}
+                </ul>
+            </div>
+
             <Link to={`/toy/edit/${toy._id}`} className="btn">Edit</Link>
             <Link to={`/toy`} className="btn">Back</Link>
         </section>
