@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
-import { Link, Navigate, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 
 // import {toyService} from "../services/toy.service.js"
 import {toyService} from "../services/toy.front-service.js"
 
 export function ToyDetails(){
+    const navigate = useNavigate()
     const [toy,setToy] = useState(null)
     const {toyId} = useParams()
 
@@ -17,7 +18,7 @@ export function ToyDetails(){
             .then (toy => setToy(toy))
             .catch (err => {
                 console.log('Had issues getting toy details ', err)
-                Navigate('/toy')
+                navigate('/toy')
             })
     }
 
