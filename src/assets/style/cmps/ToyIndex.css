@@ -1,0 +1,19 @@
+.toy-index{
+    display: flex;
+    flex-direction: column;
+}
+
+.add-btn {
+    cursor: pointer;
+    background-color: var(--clr1bg);
+    margin: 10px;
+    padding: 8px;
+    border-radius: 4px;
+    max-width: 80px;
+}
+
+.add-btn:hover {
+    background-color: var(--clr1);
+    color: white;
+    transition: .3s;
+}

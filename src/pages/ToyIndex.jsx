@@ -48,7 +48,7 @@ export function ToyIndex() {
     }
 
     return (
-        <main>
+        <main className="toy-index">
             <Link to="/toy/edit" className="add-btn">Add a toy</Link>
             <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} />
             {!isLoading
