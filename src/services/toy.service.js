@@ -17,40 +17,40 @@ export const toyService = {
 }
 
 function query(filterBy = {}) {
-    // return httpService.get(BASE_URL, filterBy)
-    return storageService.query(STORAGE_KEY)
-        .then(toys => {
-            if (!filterBy.txt) filterBy.txt = ''
-            if (!filterBy.maxPrice) filterBy.maxPrice = 1000
-            const regExp = new RegExp(filterBy.txt, 'i')
-            return toys.filter(toy =>
-                regExp.test(toy.name) && toy.price < filterBy.maxPrice
-            )
-        })
+    return httpService.get(BASE_URL, filterBy)
+    // return storageService.query(STORAGE_KEY)
+    //     .then(toys => {
+    //         if (!filterBy.txt) filterBy.txt = ''
+    //         if (!filterBy.maxPrice) filterBy.maxPrice = 1000
+    //         const regExp = new RegExp(filterBy.txt, 'i')
+    //         return toys.filter(toy =>
+    //             regExp.test(toy.name) && toy.price < filterBy.maxPrice
+    //         )
+    //     })
 }
 
 function getById(toyId) {
-    // return httpService.get(BASE_URL + toyId)
-    return storageService.get(STORAGE_KEY, toyId)
+    return httpService.get(BASE_URL + toyId)
+    // return storageService.get(STORAGE_KEY, toyId)
 }
 
 function remove(toyId) {
-    // return httpService.delete(BASE_URL + toyId)
-    return storageService.remove(STORAGE_KEY, toyId)
+    return httpService.delete(BASE_URL + toyId)
+    // return storageService.remove(STORAGE_KEY, toyId)
 
 }
 
 function save(toy) {
-    // if (toy._id) {
-    //     return httpService.put(BASE_URL, toy)
-    // } else {
-    //     return httpService.post(BASE_URL, toy)
-    // }
     if (toy._id) {
-        return storageService.put(STORAGE_KEY, toy)
+        return httpService.put(BASE_URL, toy)
     } else {
-        return storageService.post(STORAGE_KEY, toy)
+        return httpService.post(BASE_URL, toy)
     }
+    // if (toy._id) {
+    //     return storageService.put(STORAGE_KEY, toy)
+    // } else {
+    //     return storageService.post(STORAGE_KEY, toy)
+    // }
 }
 
 function getEmptyToy() {
