@@ -8,6 +8,7 @@ export function ToyList({ toys, onRemoveToy, onEditToy }) {
                     <ToyPreview toy={toy} />
                     <div className="toy-controls">
                         <button onClick={() => onRemoveToy(toy._id)}>X</button>
+                        &nbsp; | &nbsp;
                         <button onClick={() => onEditToy(toy)}>Edit</button>
                     </div>
                 </li>
