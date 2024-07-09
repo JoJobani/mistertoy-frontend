@@ -2,6 +2,7 @@
     list-style: none;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     padding-left: 0;
     gap: 0.6em;
     margin-block: 0.6em;
@@ -10,7 +11,28 @@
 .toy-list li {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     background-color: var(--clr1bg);
-    padding: 0.65em;
+}
+
+.toy-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding: 0.5em;
+}
+
+.toy-controls .btn {
+    flex: 1;
+    margin: 0 0.2em;
+    padding: 0.5em;
+    text-align: center;
+    text-decoration: none;
+    font-size: 0.8em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.toy-controls .btn:hover {
+    background-color: #a3c3d2;
 }

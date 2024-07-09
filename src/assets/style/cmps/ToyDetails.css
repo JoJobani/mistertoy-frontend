@@ -1,0 +1,18 @@
+.toy-details{
+    display: flex;
+    flex-direction: column;
+}
+
+.toy-details h1 {
+    font-size: 2em;
+}
+
+.toy-details h5{
+    font-size: 1em;
+}
+
+.toy-details img{
+    max-width: 200px;
+    display: block;
+    margin: auto;
+}

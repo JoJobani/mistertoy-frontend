@@ -1,4 +1,4 @@
-button {
+.btn {
     cursor: pointer;
     background-color: var(--clr1);
     color: white;
@@ -6,9 +6,10 @@ button {
     border: 0;
     padding: 0.5em 0.8em;
     border-radius: 4px;
+    text-align: center;
 }
 
-button:hover {
+.btn:hover {
     background-color: var(--clr1bg);
     color: black;
     transition: .3s;
