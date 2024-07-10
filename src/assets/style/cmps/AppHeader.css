@@ -10,14 +10,6 @@
     align-items: center;
 }
 
-.app-header img{
+.app-header img {
     max-width: 100px;
 }
-
-
-.app-nav {
-    display: flex;
-    gap: 20px;
-    font-size: 18px;
-}
-
