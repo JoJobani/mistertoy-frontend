@@ -1,6 +1,5 @@
 import logo from "../assets/img/home.png"
 
-
 export function Home() {
     return (
         <section>

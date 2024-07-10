@@ -1,0 +1,18 @@
+.toy-edit{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: antiquewhite;
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 20px;
+    padding-inline: 40px;
+    width: fit-content;
+}
+
+.toy-edit form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}

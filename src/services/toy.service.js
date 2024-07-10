@@ -7,59 +7,62 @@ const STORAGE_KEY = 'toyDB'
 
 // _createToys()
 
+const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle',
+    'Outdoor', 'Battery Powered']
+
 export const toyService = {
     query,
     getById,
     save,
     remove,
     getEmptyToy,
-    getDefaultFilter
+    getDefaultFilter,
+    getDefaultSort,
+    getToyLabels
 }
 
-function query(filterBy = {}) {
-    return httpService.get(BASE_URL, filterBy)
-    // return storageService.query(STORAGE_KEY)
-    //     .then(toys => {
-    //         if (!filterBy.txt) filterBy.txt = ''
-    //         if (!filterBy.maxPrice) filterBy.maxPrice = 1000
-    //         const regExp = new RegExp(filterBy.txt, 'i')
-    //         return toys.filter(toy =>
-    //             regExp.test(toy.name) && toy.price < filterBy.maxPrice
-    //         )
-    //     })
+function query(filterBy = {}, sortBy) {
+    // return httpService.get(BASE_URL, { filterBy, sortBy })
+    return storageService.query(STORAGE_KEY)
+        .then(toys => {
+            if (!filterBy.txt) filterBy.txt = ''
+            if (!filterBy.maxPrice) filterBy.maxPrice = 1000
+            const regExp = new RegExp(filterBy.txt, 'i')
+            return toys.filter(toy =>
+                regExp.test(toy.name) && toy.price < filterBy.maxPrice
+            )
+        })
 }
 
 function getById(toyId) {
-    return httpService.get(BASE_URL + toyId)
-    // return storageService.get(STORAGE_KEY, toyId)
+    // return httpService.get(BASE_URL + toyId)
+    return storageService.get(STORAGE_KEY, toyId)
 }
 
 function remove(toyId) {
-    return httpService.delete(BASE_URL + toyId)
-    // return storageService.remove(STORAGE_KEY, toyId)
-
+    // return httpService.delete(BASE_URL + toyId)
+    return storageService.remove(STORAGE_KEY, toyId)
 }
 
 function save(toy) {
-    if (toy._id) {
-        return httpService.put(BASE_URL, toy)
-    } else {
-        return httpService.post(BASE_URL, toy)
-    }
     // if (toy._id) {
-    //     return storageService.put(STORAGE_KEY, toy)
+    //     return httpService.put(BASE_URL, toy)
     // } else {
-    //     return storageService.post(STORAGE_KEY, toy)
+    //     return httpService.post(BASE_URL, toy)
     // }
+    if (toy._id) {
+        return storageService.put(STORAGE_KEY, toy)
+    } else {
+        return storageService.post(STORAGE_KEY, toy)
+    }
 }
 
 function getEmptyToy() {
     return {
-        name: 'Demo toy ' + (Date.now() % 1000),
-        price: utilService.getRandomIntInclusive(10, 500),
+        name: '',
+        price: '',
         labels: [],
-        createdAt: '',
-        inStock: false
+        isAvailable: true
     }
 }
 
@@ -69,6 +72,24 @@ function getDefaultFilter() {
         maxPrice: '',
         labels: []
     }
+}
+
+function getDefaultSort() {
+    return { type: '', desc: 1 }
+}
+
+function getToyLabels() {
+    return [...labels]
+}
+
+function _getRandomLabels() {
+    const labelsCopy = [...labels]
+    const randomLabels = []
+    for (let i = 0; i < 2; i++) {
+        const randomIdx = Math.floor(Math.random() * labelsCopy.length)
+        randomLabels.push(labelsCopy.splice(randomIdx, 1)[0])
+    }
+    return randomLabels
 }
 
 function _createToys() {
@@ -84,13 +105,11 @@ function _createToys() {
 }
 
 function _createRandToy() {
-    const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle',
-        'Outdoor', 'Battery Powered']
     return {
         _id: utilService.makeId(),
         name: utilService.makeLorem(2),
         price: utilService.getRandomIntInclusive(10, 500),
-        labels: [labels[Math.floor(Math.random() * labels.length)]],
+        labels: _getRandomLabels(),
         createdAt: Date.now(),
         inStock: true
     }
