@@ -11,13 +11,6 @@
 }
 
 .toy-filter .labels-field {
-.toy-filter form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.toy-filter .labels-field {
     display: flex;
 }
 
