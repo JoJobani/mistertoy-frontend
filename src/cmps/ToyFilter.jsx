@@ -1,3 +1,14 @@
+import * as React from 'react'
+import TextField from '@mui/material/TextField'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import Select from '@mui/material/Select'
+import Checkbox from '@mui/material/Checkbox'
+import Autocomplete from '@mui/material/Autocomplete'
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
+import CheckBoxIcon from '@mui/icons-material/CheckBox'
+
 import { useRef, useState } from "react"
 import { utilService } from "../services/util.service.js"
 import { useEffectUpdate } from "../customHooks/useEffectUpdate.js"
@@ -5,6 +16,8 @@ import { toyService } from "../services/toy.service.js"
 import { ToySort } from "./ToySort.jsx"
 
 export function ToyFilter({ filterBy, onSetFilter, sortBy, onSetSort }) {
+    const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+    const checkedIcon = <CheckBoxIcon fontSize="small" />;
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
     const debouncedOnSetFilter = useRef(utilService.debounce(onSetFilter, 200))
     const toyLabels = toyService.getToyLabels()
@@ -22,62 +35,74 @@ export function ToyFilter({ filterBy, onSetFilter, sortBy, onSetSort }) {
         setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }))
     }
 
-    const { txt, inStock, labels } = filterByToEdit
+    const { txt, inStock, maxPrice } = filterByToEdit
 
     return (
         <section className="toy-filter">
             <h2>Toys filter/sort</h2>
             <form>
-                <div className="name-field">
-                    <label htmlFor="name">Name:</label>
-                    <input
-                        type="text"
-                        id="name"
-                        name="txt"
-                        placeholder="Search toy name..."
-                        value={txt}
-                        onChange={handleChange}
-                    />
-                </div>
+                <TextField
+                    id="name"
+                    label="Toy name"
+                    variant="outlined"
+                    type="text"
+                    name="txt"
+                    value={txt}
+                    onChange={handleChange}
+                    size="small" />
 
-                <div className="price-field">
-                    <label htmlFor="maxPrice">Max price:</label>
-                    <input type="number"
-                        id="maxPrice"
-                        name="maxPrice"
-                        placeholder="Max price"
-                        value={filterByToEdit.maxPrice || ''}
-                        onChange={handleChange}
-                    />
-                </div>
+                <TextField
+                    id="maxPrice"
+                    name="maxPrice"
+                    label="Max price"
+                    variant="outlined"
+                    type="number"
+                    onChange={handleChange}
+                    value={maxPrice || ''}
+                    size="small" />
 
-                <div className="stock-field">
-                    <label htmlFor="inStock">In stock:</label>
-                    <select name="inStock" value={inStock || ''} onChange={handleChange}>
-                        <option value="">All</option>
-                        <option value="true">In stock</option>
-                        <option value="false">Not in stock</option>
-                    </select>
-                </div>
-
-                <div className="labels-field">
-                    <label htmlFor="labels">Labels:</label>
-                    <select
-                        multiple
-                        name="labels"
-                        value={labels || []}
+                <FormControl sx={{ minWidth: 120 }} size="small">
+                    <InputLabel id="inStock">Stock</InputLabel>
+                    <Select
+                        labelId="inStock"
+                        id="inStock"
+                        value={inStock || ''}
+                        label='Stock'
                         onChange={handleChange}
                     >
-                        <option value="">Labels</option>
-                        <>
-                            {toyLabels.map(label => (
-                                <option key={label} value={label}>
-                                    {label}
-                                </option>
-                            ))}
-                        </>
-                    </select>
-                </div>
+                        <MenuItem value=''>All items</MenuItem>
+                        <MenuItem value="true">In stock</MenuItem>
+                        <MenuItem value="false">Not in stock</MenuItem>
+                    </Select>
+                </FormControl>
+
+                <Autocomplete
+                    multiple
+                    id="labels"
+                    size="small"
+                    options={toyLabels}
+                    getOptionLabel={(option) => option.toString()}
+                    disableCloseOnSelect
+                    renderOption={(props, option, { selected }) => {
+                        const { key, ...optionProps } = props;
+                        return (
+                            <li key={key} {...optionProps}>
+                                <Checkbox
+                                    icon={icon}
+                                    checkedIcon={checkedIcon}
+                                    style={{ marginRight: 8 }}
+                                    checked={selected}
+                                />
+                                {option}
+                            </li>
+                        )
+                    }}
+                    style={{ width: 200 }}
+                    renderInput={(params) => (
+                        <TextField {...params} label="Labels" placeholder="Choose labels" />
+                    )}
+                />
+
             </form>
             <ToySort sortBy={sortBy} onSetSort={onSetSort} />
         </section>

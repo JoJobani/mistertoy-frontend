@@ -1,3 +1,9 @@
+import * as React from 'react'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import Select from '@mui/material/Select'
+
 import { useEffect, useState } from "react"
 
 export function ToySort({ sortBy, onSetSort }) {
@@ -17,22 +23,20 @@ export function ToySort({ sortBy, onSetSort }) {
     }
 
     return (
-        <form className="toy-sort">
-            <select name="type" value={sortByToEdit.type} onChange={handleChange}>
-                <option value="">Sort by</option>
-                <option value="name">Name</option>
-                <option value="price">Price</option>
-                <option value="createdAt">Date</option>
-            </select>
-            <label>
-                <input
-                    type="checkbox"
-                    name='desc'
-                    checked={sortByToEdit.desc < 0}
-                    onChange={handleChange}
-                />
-                Descending
-            </label>
-        </form>
+        <FormControl sx={{ minWidth: 120 }} size="small">
+            <InputLabel id="sortBy">Sort</InputLabel>
+            <Select
+                labelId="sortBy"
+                id="sortBy"
+                value={sortByToEdit.type}
+                label="Sort"
+                onChange={handleChange}
+            >
+                <MenuItem value="none">Default</MenuItem>
+                <MenuItem value="name">Name</MenuItem>
+                <MenuItem value="price">Price</MenuItem>
+                <MenuItem value="createdAt">Date</MenuItem>
+            </Select>
+        </FormControl>
     )
 }

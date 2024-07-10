@@ -4,11 +4,10 @@ import { storageService } from './async-storage.service.js'
 
 const BASE_URL = 'toy/'
 const STORAGE_KEY = 'toyDB'
-
-// _createToys()
-
 const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle',
     'Outdoor', 'Battery Powered']
+
+_createToys()
 
 export const toyService = {
     query,
@@ -24,14 +23,6 @@ export const toyService = {
 function query(filterBy = {}, sortBy) {
     // return httpService.get(BASE_URL, { filterBy, sortBy })
     return storageService.query(STORAGE_KEY)
-        .then(toys => {
-            if (!filterBy.txt) filterBy.txt = ''
-            if (!filterBy.maxPrice) filterBy.maxPrice = 1000
-            const regExp = new RegExp(filterBy.txt, 'i')
-            return toys.filter(toy =>
-                regExp.test(toy.name) && toy.price < filterBy.maxPrice
-            )
-        })
 }
 
 function getById(toyId) {
@@ -100,7 +91,6 @@ function _createToys() {
             toys.push(_createRandToy())
         }
         utilService.saveToStorage(STORAGE_KEY, toys)
-        console.log(toys)
     }
 }
 

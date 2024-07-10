@@ -1,6 +1,6 @@
 .toy-filter {
     background-color: var(--clr1bg);
-    padding: 1.5em;
+    padding: 1em;
     border-radius: 10px;
 }
 
@@ -8,16 +8,14 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    margin-bottom: 10px;
 }
 
-.toy-filter .labels-field {
-    display: flex;
-}
-
-.toy-sort {
-    max-height: 1em;
-}
-
-.toy-sort {
-    max-height: 1em;
+@media (max-width:450px) {
+    .toy-filter form>* {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        margin-bottom: 5px;
+    }
 }

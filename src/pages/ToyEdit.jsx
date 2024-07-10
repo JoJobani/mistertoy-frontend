@@ -71,7 +71,7 @@ export function ToyEdit() {
                     required
                 />
 
-                <label htmlFor="price">Price : </label>
+                <label htmlFor="price">Price: </label>
                 <input type="number"
                     name="price"
                     id="price"
