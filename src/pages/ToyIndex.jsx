@@ -1,15 +1,15 @@
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
-
 import { showSuccessMsg, showErrorMsg } from "../services/event-bus.service.js"
-import { loadToys, removeToy, saveToy, setFilterBy } from "../store/actions/toy.actions.js"
+import { loadToys, removeToyOptimistic, setFilterBy, setSortBy } from "../store/actions/toy.actions.js"
 import { ToyFilter } from "../cmps/ToyFilter.jsx"
 import { ToyList } from "../cmps/ToyList.jsx"
 
 export function ToyIndex() {
     const toys = useSelector(storeState => storeState.toyModule.toys)
     const filterBy = useSelector(storeState => storeState.toyModule.filterBy)
+    const sortBy = useSelector(storeState => storeState.toyModule.sortBy)
     const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
 
     useEffect(() => {
@@ -17,15 +17,20 @@ export function ToyIndex() {
             .catch(err => {
                 showErrorMsg('Cannot load toys')
             })
-    }, [filterBy])
+    }, [filterBy, sortBy])
 
     function onSetFilter(filterBy) {
         setFilterBy(filterBy)
     }
 
+    function onSetSort(sortBy) {
+        setSortBy(sortBy)
+    }
+
     function onRemoveToy(toyId) {
-        removeToy(toyId)
+        removeToyOptimistic(toyId)
             .then(() => {
+                loadToys()
                 showSuccessMsg('Toy removed')
             })
             .catch(err => {
@@ -33,28 +38,19 @@ export function ToyIndex() {
             })
     }
 
-    function onEditToy(toy) {
-        const price = +prompt('Enter new price')
-        const toyToSave = { ...toy, price }
-
-        saveToy(toyToSave)
-            .then(savedToy => {
-                showSuccessMsg('Toy price updated')
-            })
-            .catch(err => {
-                showErrorMsg('Cannot update toy price')
-            })
-    }
-
     return (
         <main className="toy-index">
             <Link to="/toy/edit" className="add-btn">Add a toy</Link>
-            <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} />
+            <ToyFilter
+                filterBy={filterBy}
+                onSetFilter={onSetFilter}
+                sortBy={sortBy}
+                onSetSort={onSetSort}
+            />
             {!isLoading
                 ? <ToyList
                     toys={toys}
                     onRemoveToy={onRemoveToy}
-                    onEditToy={onEditToy}
                 />
                 : <div>Loading...</div>
             }

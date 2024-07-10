@@ -1,24 +1,26 @@
-.toy-details{
+.toy-details {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .toy-details h1 {
     font-size: 2em;
 }
 
-.toy-details h5{
+.toy-details h5 {
     font-size: 1em;
 }
 
-.toy-details img{
+.toy-details img {
     max-width: 200px;
     display: block;
     margin: auto;
 }
 
-.toy-details .btn{
-    max-width: 100px;
+.toy-details .btn {
+    width: 100px;
 }
 
 .toy-labels ul {

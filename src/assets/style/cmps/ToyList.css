@@ -3,30 +3,25 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding-left: 0;
-    gap: 0.6em;
-    margin-block: 0.6em;
+    padding: 0;
+    gap: 10px;
 }
 
 .toy-list li {
-    display: flex;
-    flex-direction: column;
     background-color: var(--clr1bg);
+    height: fit-content;
 }
 
 .toy-controls {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-top: auto;
+    justify-content: center;
     padding: 0.5em;
 }
 
 .toy-controls .btn {
-    flex: 1;
     margin: 0 0.2em;
     padding: 0.5em;
-    text-align: center;
     text-decoration: none;
     font-size: 0.8em;
     cursor: pointer;

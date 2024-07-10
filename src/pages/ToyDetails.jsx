@@ -25,7 +25,7 @@ export function ToyDetails() {
     return (
         <section className="toy-details">
             <h1>{toy.name}</h1>
-            <h5>Price: {toy.price}</h5>
+            <h3>Price: <span>${toy.price.toLocaleString()}</span></h3>
             <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illo laboriosam sunt vero, vitae ducimus ullam quis explicabo neque quam voluptate numquam quibusdam repellendus veniam saepe? Molestias, assumenda! Similique, praesentium facilis?</p>
 
             <div className="toy-labels">

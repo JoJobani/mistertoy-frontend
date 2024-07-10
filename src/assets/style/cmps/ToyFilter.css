@@ -1,10 +1,19 @@
 .toy-filter {
     background-color: var(--clr1bg);
-    padding: 1em;
+    padding: 1.5em;
+    border-radius: 10px;
 }
 
-.toy-filter form{
+.toy-filter form {
     display: flex;
-    flex-direction: column;
-    max-width: 200px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.toy-filter .labels-field {
+    display: flex;
+}
+
+.toy-sort {
+    max-height: 1em;
 }
