@@ -16,8 +16,8 @@ import { toyService } from "../services/toy.service.js"
 import { ToySort } from "./ToySort.jsx"
 
 export function ToyFilter({ filterBy, onSetFilter, sortBy, onSetSort }) {
-    const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-    const checkedIcon = <CheckBoxIcon fontSize="small" />;
+    const icon = <CheckBoxOutlineBlankIcon fontSize="small" />
+    const checkedIcon = <CheckBoxIcon fontSize="small" />
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
     const debouncedOnSetFilter = useRef(utilService.debounce(onSetFilter, 200))
     const toyLabels = toyService.getToyLabels()
@@ -49,7 +49,8 @@ export function ToyFilter({ filterBy, onSetFilter, sortBy, onSetSort }) {
                     name="txt"
                     value={txt}
                     onChange={handleChange}
-                    size="small" />
+                    size="small" 
+                    />
 
                 <TextField
                     id="maxPrice"
@@ -59,7 +60,8 @@ export function ToyFilter({ filterBy, onSetFilter, sortBy, onSetSort }) {
                     type="number"
                     onChange={handleChange}
                     value={maxPrice || ''}
-                    size="small" />
+                    size="small" 
+                    />
 
                 <FormControl sx={{ minWidth: 120 }} size="small">
                     <InputLabel id="inStock">Stock</InputLabel>

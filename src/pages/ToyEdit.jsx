@@ -1,3 +1,11 @@
+import * as React from 'react'
+import TextField from '@mui/material/TextField'
+import Checkbox from '@mui/material/Checkbox'
+import Autocomplete from '@mui/material/Autocomplete'
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
+import CheckBoxIcon from '@mui/icons-material/CheckBox'
+import FormControlLabel from '@mui/material/FormControlLabel'
+
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { toyService } from "../services/toy.service.js"
@@ -5,6 +13,8 @@ import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 import { saveToy } from "../store/actions/toy.actions.js"
 
 export function ToyEdit() {
+    const icon = <CheckBoxOutlineBlankIcon fontSize="small" />
+    const checkedIcon = <CheckBoxIcon fontSize="small" />
     const [toyToEdit, setToyToEdit] = useState(toyService.getEmptyToy())
     const { toyId } = useParams()
     const navigate = useNavigate()
@@ -25,19 +35,10 @@ export function ToyEdit() {
     }
 
     function handleChange({ target }) {
-        let { value, type, name: field } = target
+        let { value, type, name: field, checked } = target
         value = type === 'number' ? +value : value
+        value = type === 'checkbox' ? checked : value
         setToyToEdit((prevToy) => ({ ...prevToy, [field]: value }))
-    }
-
-    function handleLabelChange({ target }) {
-        const value = target.value
-        setToyToEdit(prevToy => {
-            const newLabels = prevToy.labels.includes(value)
-                ? prevToy.labels.filter(label => label !== value)
-                : [...prevToy.labels, value]
-            return { ...prevToy, labels: newLabels }
-        })
     }
 
     function onSaveToy(ev) {
@@ -53,7 +54,7 @@ export function ToyEdit() {
             })
     }
 
-    const { name, price, labels: selectedLabels } = toyToEdit
+    const { name, price, labels: selectedLabels, inStock } = toyToEdit
 
     if (toyId && toyToEdit._id !== toyId) return <div>Loading...</div>
     return (
@@ -61,41 +62,69 @@ export function ToyEdit() {
             <h2>{toyToEdit._id ? 'Edit' : 'Add'} toy</h2>
 
             <form onSubmit={onSaveToy}>
-                <label htmlFor="name">Name: </label>
-                <input
+                <TextField
+                    id="name"
+                    label="Toy name"
+                    variant="outlined"
                     type="text"
                     name="name"
-                    id="name"
                     value={name}
                     onChange={handleChange}
+                    size="small"
                     required
                 />
 
-                <label htmlFor="price">Price: </label>
-                <input type="number"
+                <TextField
                     name="price"
                     id="price"
-                    value={price}
+                    label="Price"
+                    variant="outlined"
+                    type="number"
                     onChange={handleChange}
-                    min={0}
+                    value={price}
+                    size="small"
                     required
                 />
 
                 <label>Labels:</label>
-                <div className="labels-container">
-                    {labels.map(label => (
-                        <div key={label}>
-                            <input
-                                type="checkbox"
-                                id={label}
-                                value={label}
-                                checked={selectedLabels.includes(label)}
-                                onChange={handleLabelChange}
-                            />
-                            <label htmlFor={label}>{label}</label>
-                        </div>
-                    ))}
-                </div>
+                <Autocomplete
+                    multiple
+                    id="labels"
+                    size="small"
+                    options={labels}
+                    value={selectedLabels}
+                    onChange={(ev, newLabels) => {
+                        setToyToEdit(prevToy => ({ ...prevToy, labels: newLabels }));
+                    }}
+                    getOptionLabel={(option) => option.toString()}
+                    disableCloseOnSelect
+                    renderOption={(props, option, { selected }) => {
+                        const { key, ...optionProps } = props;
+                        return (
+                            <li key={key} {...optionProps}>
+                                <Checkbox
+                                    icon={icon}
+                                    checkedIcon={checkedIcon}
+                                    style={{ marginRight: 8 }}
+                                    checked={selected}
+                                />
+                                {option}
+                            </li>
+                        )
+                    }}
+                    style={{ width: 200 }}
+                    renderInput={(params) => (
+                        <TextField {...params} placeholder="Choose labels" />
+                    )}
+                />
+
+                <FormControlLabel
+                    control={<Checkbox
+                        name="inStock"
+                        checked={inStock}
+                        onChange={handleChange} />}
+                    label="In stock?"
+                />
 
                 <div>
                     <button className="btn">{toyToEdit._id ? 'Save' : 'Add'}</button>

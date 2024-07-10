@@ -37,6 +37,8 @@ export function ToyDetails() {
                 </ul>
             </div>
 
+            <h3>{toy.inStock ? 'Toy in stock!' : 'Toy currently not in stock'}</h3>
+
             <Link to={`/toy/edit/${toy._id}`} className="btn">Edit</Link>
             <Link to={`/toy`} className="btn">Back</Link>
         </section>
