@@ -17,7 +17,9 @@ export const toyService = {
     getEmptyToy,
     getDefaultFilter,
     getDefaultSort,
-    getToyLabels
+    getToyLabels,
+    getLabelPriceSum,
+    getLabelStock
 }
 
 function query(filterBy = {}, sortBy) {
@@ -71,6 +73,32 @@ function getDefaultSort() {
 
 function getToyLabels() {
     return [...labels]
+}
+
+function getLabelPriceSum(toys) {
+    if (!toys || toys.length === 0) return []
+
+    const labelPriceSums = {}
+    labels.forEach(label => { labelPriceSums[label] = 0; })
+    toys.forEach(toy => {
+        toy.labels.forEach(label => {
+            labelPriceSums[label] += toy.price
+        })
+    })
+    return labels.map(label => labelPriceSums[label])
+}
+
+function getLabelStock(toys) {
+    if (!toys || toys.length === 0) return []
+
+    const labelStock = {}
+    labels.forEach(label => { labelStock[label] = 0; })
+    toys.forEach(toy => {
+        toy.labels.forEach(label => {
+            labelStock[label]++
+        })
+    })
+    return labels.map(label => labelStock[label])
 }
 
 function _getRandomLabels() {
