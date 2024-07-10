@@ -1,5 +1,5 @@
+import Button from '@mui/material/Button'
 import { useEffect } from "react"
-import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { showSuccessMsg, showErrorMsg } from "../services/event-bus.service.js"
 import { loadToys, removeToyOptimistic, setFilterBy, setSortBy } from "../store/actions/toy.actions.js"
@@ -28,6 +28,7 @@ export function ToyIndex() {
     }
 
     function onRemoveToy(toyId) {
+        if (!confirm('Are you sure?')) return
         removeToyOptimistic(toyId)
             .then(() => {
                 loadToys()
@@ -40,7 +41,14 @@ export function ToyIndex() {
 
     return (
         <main className="toy-index">
-            <Link to="/toy/edit" className="add-btn">Add a toy</Link>
+            <Button
+                variant="contained"
+                href="/toy/edit"
+                color="primary"
+                sx={{ width: "fit-content", m: 1 }}
+            >
+                Add toy
+            </Button>
             <ToyFilter
                 filterBy={filterBy}
                 onSetFilter={onSetFilter}

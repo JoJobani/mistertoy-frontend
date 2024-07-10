@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom"
+import Button from '@mui/material/Button'
 
 import { ToyPreview } from "./ToyPreview"
-
 
 export function ToyList({ toys, onRemoveToy }) {
     return (
@@ -10,10 +9,25 @@ export function ToyList({ toys, onRemoveToy }) {
                 <li className="toy-preview" key={toy._id}>
                     <ToyPreview toy={toy} />
                     <div className="toy-controls">
-                        <button className="btn" onClick={() => onRemoveToy(toy._id)}>X</button>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={() => onRemoveToy(toy._id)}
+                            sx={{ width: "fit-content", m: 1 }}
+                            size='small'
+                        >
+                            X
+                        </Button>
                         &nbsp; | &nbsp;
-
-                        <Link to={`/toy/${toy._id}`} className="btn">Details</Link>
+                        <Button
+                            variant="contained"
+                            href={`/toy/${toy._id}`}
+                            color="primary"
+                            sx={{ width: "fit-content", m: 1 }}
+                            size='small'
+                        >
+                            Details
+                        </Button>
                     </div>
                 </li>
             )}

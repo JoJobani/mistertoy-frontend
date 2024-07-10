@@ -18,16 +18,3 @@
     justify-content: center;
     padding: 0.5em;
 }
-
-.toy-controls .btn {
-    margin: 0 0.2em;
-    padding: 0.5em;
-    text-decoration: none;
-    font-size: 0.8em;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.toy-controls .btn:hover {
-    background-color: #a3c3d2;
-}
