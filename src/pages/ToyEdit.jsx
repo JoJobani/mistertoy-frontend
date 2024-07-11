@@ -1,13 +1,16 @@
 import * as React from 'react'
-import TextField from '@mui/material/TextField'
-import Checkbox from '@mui/material/Checkbox'
-import Autocomplete from '@mui/material/Autocomplete'
+import {
+    Button,
+    Checkbox,
+    TextField,
+    Autocomplete
+} from '@mui/material'
+import * as Yup from 'yup'
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
 import CheckBoxIcon from '@mui/icons-material/CheckBox'
-import FormControlLabel from '@mui/material/FormControlLabel'
-
+import { Field, Form, Formik } from 'formik'
 import { useEffect, useState } from "react"
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { toyService } from "../services/toy.service.js"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 import { saveToy } from "../store/actions/toy.actions.js"
@@ -34,103 +37,118 @@ export function ToyEdit() {
             })
     }
 
-    function handleChange({ target }) {
-        let { value, type, name: field, checked } = target
-        value = type === 'number' ? +value : value
-        value = type === 'checkbox' ? checked : value
-        setToyToEdit((prevToy) => ({ ...prevToy, [field]: value }))
-    }
+    const ToySchema = Yup.object().shape({
+        name: Yup.string()
+            .required('Name is required')
+            .min(2, 'Name too short')
+            .max(16, 'Name too long'),
+        price: Yup.number()
+            .required('Must enter valid price')
+            .min(1, 'Price must be at least 1')
+    })
 
-    function onSaveToy(ev) {
-        ev.preventDefault()
-        saveToy(toyToEdit)
+    function onSaveToy(values, { setSubmitting }) {
+        saveToy(values)
             .then(() => {
                 showSuccessMsg('Toy saved!')
-                navigate('/toy')
+                navigate(`/toy/${toyId}`)
             })
             .catch(err => {
                 console.log('Had issue in saving toy ', err)
                 showErrorMsg('Had issues in toy edit')
             })
+            .finally(() => {
+                setSubmitting(false)
+            })
     }
-
-    const { name, price, labels: selectedLabels, inStock } = toyToEdit
 
     if (toyId && toyToEdit._id !== toyId) return <div>Loading...</div>
     return (
         <section className="toy-edit">
             <h2>{toyToEdit._id ? 'Edit' : 'Add'} toy</h2>
 
-            <form onSubmit={onSaveToy}>
-                <TextField
-                    id="name"
-                    label="Toy name"
-                    variant="outlined"
-                    type="text"
-                    name="name"
-                    value={name}
-                    onChange={handleChange}
-                    size="small"
-                    required
-                />
+            <Formik
+                enableReinitialize
+                initialValues={toyToEdit}
+                validationSchema={ToySchema}
+                onSubmit={onSaveToy}>
+                {({ errors, touched, values, handleChange, setFieldValue }) => (
+                    <Form>
+                        <Field
+                            as={TextField}
+                            label="Name"
+                            variant="outlined"
+                            name="name"
+                            required
+                            margin="normal"
+                            error={touched.name && !!errors.name}
+                            helperText={touched.name && errors.name}
+                            onChange={handleChange}
+                            value={values.name}
+                        />
 
-                <TextField
-                    name="price"
-                    id="price"
-                    label="Price"
-                    variant="outlined"
-                    type="number"
-                    onChange={handleChange}
-                    value={price}
-                    size="small"
-                    required
-                />
+                        <Field
+                            as={TextField}
+                            label="Price"
+                            variant="outlined"
+                            type="number"
+                            name="price"
+                            required
+                            margin="normal"
+                            inputProps={{ min: 1 }}
+                            error={touched.price && !!errors.price}
+                            helperText={touched.price && errors.price}
+                            onChange={handleChange}
+                            value={values.price}
+                        />
 
-                <label>Labels:</label>
-                <Autocomplete
-                    multiple
-                    id="labels"
-                    size="small"
-                    options={labels}
-                    value={selectedLabels}
-                    onChange={(ev, newLabels) => {
-                        setToyToEdit(prevToy => ({ ...prevToy, labels: newLabels }));
-                    }}
-                    getOptionLabel={(option) => option.toString()}
-                    disableCloseOnSelect
-                    renderOption={(props, option, { selected }) => {
-                        const { key, ...optionProps } = props;
-                        return (
-                            <li key={key} {...optionProps}>
-                                <Checkbox
-                                    icon={icon}
-                                    checkedIcon={checkedIcon}
-                                    style={{ marginRight: 8 }}
-                                    checked={selected}
-                                />
-                                {option}
-                            </li>
-                        )
-                    }}
-                    style={{ width: 200 }}
-                    renderInput={(params) => (
-                        <TextField {...params} placeholder="Choose labels" />
-                    )}
-                />
+                        <Autocomplete
+                            multiple
+                            id="labels"
+                            size="small"
+                            options={labels}
+                            value={toyToEdit.labels}
+                            onChange={(ev, newLabels) => {
+                                setToyToEdit(prevToy => ({ ...prevToy, labels: newLabels }));
+                            }}
+                            getOptionLabel={(option) => option.toString()}
+                            disableCloseOnSelect
+                            renderOption={(props, option, { selected }) => {
+                                const { key, ...optionProps } = props;
+                                return (
+                                    <li key={key} {...optionProps}>
+                                        <Checkbox
+                                            icon={icon}
+                                            checkedIcon={checkedIcon}
+                                            style={{ marginRight: 8 }}
+                                            checked={selected}
+                                        />
+                                        {option}
+                                    </li>
+                                )
+                            }}
+                            style={{ width: 200 }}
+                            renderInput={(params) => (
+                                <TextField {...params} placeholder="Choose labels" />
+                            )}
+                        />
 
-                <FormControlLabel
-                    control={<Checkbox
-                        name="inStock"
-                        checked={inStock}
-                        onChange={handleChange} />}
-                    label="In stock?"
-                />
+                        <label>
+                            <Field
+                                type='checkbox'
+                                name="inStock"
+                                checked={values.inStock}
+                                onChange={handleChange}
+                            />
+                            In stock?
+                        </label>
 
-                <div>
-                    <button className="btn">{toyToEdit._id ? 'Save' : 'Add'}</button>
-                    <Link to="/toy">Cancel</Link>
-                </div>
-            </form>
+                        <Button variant="contained" color="primary" type="submit">
+                            {toyToEdit._id ? 'Save' : 'Add'}
+                        </Button>
+                    </Form>
+                )}
+            </Formik>
         </section>
     )
 }
