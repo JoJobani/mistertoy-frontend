@@ -79,8 +79,6 @@ export function ToyEdit() {
                             label="Name"
                             variant="outlined"
                             name="name"
-                            required
-                            margin="normal"
                             error={touched.name && !!errors.name}
                             helperText={touched.name && errors.name}
                             onChange={handleChange}
@@ -93,9 +91,6 @@ export function ToyEdit() {
                             variant="outlined"
                             type="number"
                             name="price"
-                            required
-                            margin="normal"
-                            inputProps={{ min: 1 }}
                             error={touched.price && !!errors.price}
                             helperText={touched.price && errors.price}
                             onChange={handleChange}
@@ -105,7 +100,6 @@ export function ToyEdit() {
                         <Autocomplete
                             multiple
                             id="labels"
-                            size="small"
                             options={labels}
                             value={toyToEdit.labels}
                             onChange={(ev, newLabels) => {
@@ -120,14 +114,13 @@ export function ToyEdit() {
                                         <Checkbox
                                             icon={icon}
                                             checkedIcon={checkedIcon}
-                                            style={{ marginRight: 8 }}
                                             checked={selected}
                                         />
                                         {option}
                                     </li>
                                 )
                             }}
-                            style={{ width: 200 }}
+                            style={{ maxWidth: 300 }}
                             renderInput={(params) => (
                                 <TextField {...params} placeholder="Choose labels" />
                             )}
