@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 export function ToyPreview({ toy }) {
     return (
         <Link to={`/toy/${toy._id}`} className="toy-preview">
-            <h4 className="toy-name">{toy.name}</h4>
+            <h4>{toy.name}</h4>
             <img
                 src={`https://robohash.org/${toy.name}.png?set=set3`}
                 alt={toy.name} />

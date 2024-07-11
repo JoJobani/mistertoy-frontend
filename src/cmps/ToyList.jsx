@@ -1,4 +1,5 @@
 import Button from '@mui/material/Button'
+import Tooltip from '@mui/material/Tooltip'
 
 import { ToyPreview } from "./ToyPreview"
 
@@ -7,15 +8,18 @@ export function ToyList({ toys, onRemoveToy }) {
         <ul className="toy-list">
             {toys.map(toy =>
                 <li key={toy._id}>
-                    <Button
-                        variant="text"
-                        color="secondary"
-                        onClick={() => onRemoveToy(toy._id)}
-                        sx={{ width: "fit-content", color: 'red', size: 'small' }}
-                        size='small'
-                    >
-                        X
-                    </Button>
+                    <Tooltip title="Delete" arrow>
+                        <Button
+                            className="remove-button"
+                            variant="text"
+                            color="secondary"
+                            onClick={() => onRemoveToy(toy._id)}
+                            sx={{ color: 'red', minWidth: 'auto', padding: '5px' }}
+                            size='small'
+                        >
+                            X
+                        </Button>
+                    </Tooltip>
                     <ToyPreview toy={toy} />
                 </li>
             )}

@@ -1,21 +1,26 @@
 .toy-list {
     list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
     padding: 0;
-    gap: 10px;
 }
 
 .toy-list li {
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: space-between;
-    align-items: end;
     background-color: var(--clr1bg);
     text-align: center;
     border-radius: 10px;
     padding: 1em;
-    min-width: 150px;
-    max-width: 250px;
+    height: 100%;
+    position: relative;
+}
+
+.toy-list li .remove-button {
+    position: absolute;
+    top: 5px;
+    right: 10px;
 }
