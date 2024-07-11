@@ -1,10 +1,18 @@
 .toy-preview {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--clr1bg);
     text-align: center;
-    padding: 0.5em;
     border-radius: 10px;
+    padding: 1em;
+    min-width: 150px;
+    max-width: 250px;
 }
-.toy-preview h4{
-    color: black;
+
+.toy-preview h4 {
+    font-size: 1.5em;
 }
 
 .toy-preview img {

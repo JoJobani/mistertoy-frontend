@@ -6,15 +6,3 @@
     padding: 0;
     gap: 10px;
 }
-
-.toy-list li {
-    background-color: var(--clr1bg);
-    height: fit-content;
-}
-
-.toy-controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5em;
-}

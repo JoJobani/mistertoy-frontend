@@ -7,28 +7,25 @@ export function ToyList({ toys, onRemoveToy }) {
         <ul className="toy-list">
             {toys.map(toy =>
                 <li className="toy-preview" key={toy._id}>
+                    <Button
+                        variant="text"
+                        color="secondary"
+                        onClick={() => onRemoveToy(toy._id)}
+                        sx={{ width: "fit-content", color: 'red', size: 'small' }}
+                        size='small'
+                    >
+                        X
+                    </Button>
                     <ToyPreview toy={toy} />
-                    <div className="toy-controls">
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={() => onRemoveToy(toy._id)}
-                            sx={{ width: "fit-content", m: 1 }}
-                            size='small'
-                        >
-                            X
-                        </Button>
-                        &nbsp; | &nbsp;
-                        <Button
-                            variant="contained"
-                            href={`/toy/${toy._id}`}
-                            color="primary"
-                            sx={{ width: "fit-content", m: 1 }}
-                            size='small'
-                        >
-                            Details
-                        </Button>
-                    </div>
+                    <Button
+                        variant="outlined"
+                        href={`/toy/${toy._id}`}
+                        color="secondary"
+                        sx={{ width: "fit-content" }}
+                        size='small'
+                    >
+                        Details
+                    </Button>
                 </li>
             )}
         </ul>

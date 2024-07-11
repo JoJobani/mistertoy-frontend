@@ -1,19 +1,9 @@
 .toy-index {
-    display: grid;
-    grid-template-rows: auto auto minmax(460px, 1fr) auto;
-  }
-
-.add-btn {
-    cursor: pointer;
-    background-color: var(--clr1bg);
-    margin: 10px;
-    padding: 8px;
-    border-radius: 4px;
-    max-width: 80px;
+    display: flex;
+    flex-direction: column;
+    margin-block: 10px;
 }
 
-.add-btn:hover {
-    background-color: var(--clr1);
-    color: white;
-    transition: .3s;
+.toy-index>* {
+    margin-block: 10px;
 }
