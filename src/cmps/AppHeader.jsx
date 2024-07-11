@@ -1,40 +1,50 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 
 export function AppHeader() {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const [tab, setTab] = useState(getInitialTab());
+    const navigate = useNavigate()
+    const location = useLocation()
+    const [tab, setTab] = useState(false)
 
-    function getInitialTab() {
+    useEffect(() => {
+        setTab(getTabValue(location.pathname))
+    }, [location.pathname])
+
+    function getTabValue(path) {
         const pathToIndex = {
             '/about': 0,
             '/toy': 1,
             '/dashboard': 2
         }
-        return pathToIndex[location.pathname] || 0;
+        return pathToIndex[path] !== undefined ? pathToIndex[path] : false
     }
 
     const handleChange = (event, newTab) => {
-        setTab(newTab)
         const paths = ['/about', '/toy', '/dashboard']
         navigate(paths[newTab])
     }
 
+    const handleLogoClick = () => {
+        navigate('/');
+    }
+
     return (
         <header className='app-header'>
-            <div className='logo'>
+            <Link
+                to={'/'}
+                className="logo"
+                onClick={handleLogoClick}>
                 <h1>Mister Toy</h1>
-            </div>
+            </Link>
             <nav className='app-nav'>
                 <Tabs
                     value={tab}
                     onChange={handleChange}
                     sx={{
                         '& .MuiTabs-indicator': {
-                            backgroundColor: 'cyan',
+                            backgroundColor: tab === false ? 'transparent' : 'cyan',
                         }
                     }}>
                     <Tab
@@ -48,7 +58,6 @@ export function AppHeader() {
                         sx={{ color: 'white', '&.Mui-selected': { color: 'white' } }} />
                 </Tabs>
             </nav>
-        </header >
+        </header>
     )
-
 }
