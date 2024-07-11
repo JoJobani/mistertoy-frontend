@@ -18,9 +18,11 @@ import { saveToy } from "../store/actions/toy.actions.js"
 export function ToyEdit() {
     const icon = <CheckBoxOutlineBlankIcon fontSize="small" />
     const checkedIcon = <CheckBoxIcon fontSize="small" />
+    const navigate = useNavigate()
+
     const [toyToEdit, setToyToEdit] = useState(toyService.getEmptyToy())
     const { toyId } = useParams()
-    const navigate = useNavigate()
+
 
     const labels = toyService.getToyLabels()
 
@@ -142,6 +144,9 @@ export function ToyEdit() {
                     </Form>
                 )}
             </Formik>
+            <Button variant="text" color="primary" onClick={() => navigate(-1)}>
+                Cancel
+            </Button>
         </section>
     )
 }
