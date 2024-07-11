@@ -24,8 +24,8 @@ export function AppHeader() {
     }
 
     return (
-        <header className='app-header main-layout'>
-            <div>
+        <header className='app-header'>
+            <div className='logo'>
                 <h1>Mister Toy</h1>
             </div>
             <nav className='app-nav'>
