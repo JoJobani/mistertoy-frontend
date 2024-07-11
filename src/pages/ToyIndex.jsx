@@ -44,7 +44,7 @@ export function ToyIndex() {
             <Button
                 variant="contained"
                 href="/toy/edit"
-                color="primary"
+                color="secondary"
                 sx={{ width: "fit-content" }}
             >
                 Add toy
