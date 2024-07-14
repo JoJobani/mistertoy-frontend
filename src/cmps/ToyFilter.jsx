@@ -49,8 +49,8 @@ export function ToyFilter({ filterBy, onSetFilter, sortBy, onSetSort }) {
                     name="txt"
                     value={txt}
                     onChange={handleChange}
-                    size="small" 
-                    />
+                    size="small"
+                />
 
                 <TextField
                     id="maxPrice"
@@ -60,16 +60,17 @@ export function ToyFilter({ filterBy, onSetFilter, sortBy, onSetSort }) {
                     type="number"
                     onChange={handleChange}
                     value={maxPrice || ''}
-                    size="small" 
-                    />
+                    size="small"
+                />
 
                 <FormControl sx={{ minWidth: 120 }} size="small">
                     <InputLabel id="inStock">Stock</InputLabel>
                     <Select
                         labelId="inStock"
                         id="inStock"
-                        value={inStock || ''}
+                        value={inStock}
                         label='Stock'
+                        name='inStock'
                         onChange={handleChange}
                     >
                         <MenuItem value=''>All items</MenuItem>
@@ -85,6 +86,9 @@ export function ToyFilter({ filterBy, onSetFilter, sortBy, onSetSort }) {
                     options={toyLabels}
                     getOptionLabel={(option) => option.toString()}
                     disableCloseOnSelect
+                    onChange={(event, newLabels) =>
+                        handleChange({ target: { name: 'labels', value: newLabels } })}
+                    value={filterByToEdit.labels || []}
                     renderOption={(props, option, { selected }) => {
                         const { key, ...optionProps } = props;
                         return (
