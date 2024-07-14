@@ -2,8 +2,8 @@
     display: flex;
     flex-direction: column;
     margin-block: 10px;
-}
 
-.toy-index>* {
-    margin-block: 10px;
+    &>* {
+        margin-block: 10px;
+    }
 }

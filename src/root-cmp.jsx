@@ -11,7 +11,7 @@ import { ToyEdit } from './pages/ToyEdit.jsx'
 import { ToyDetails } from './pages/ToyDetails.jsx'
 import { Dashboard } from './pages/Dashboard.jsx'
 
-import '../src/assets/style/main.css'
+import '../src/assets/style/main.scss'
 
 export function App() {
   return (

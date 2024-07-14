@@ -1,0 +1,62 @@
+/* flex helpers */
+.flex {
+    display: flex;
+
+    &.flex-column {
+        flex-direction: column;
+    }
+
+    &.justify-center {
+        justify-content: center;
+    }
+
+    &.justify-between {
+        justify-content: space-between;
+    }
+
+    &.align-center {
+        align-items: center;
+    }
+}
+
+/* text helpers */
+.colored-text {
+    color: $clr1;
+}
+
+/* list helpers */
+.clean-list {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+/* font awesome */
+.fa {
+    font-family: fa;
+
+    &.fa-facebook::before {
+        content: "\f39e";
+    }
+
+    &.fa-twitter::before {
+        content: "\f099";
+    }
+
+    &.fa-dribbble::before {
+        content: "\f17d";
+    }
+
+    &.fa-behance::before {
+        content: "\f1b4";
+    }
+}
+
+/* color helpers */
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}

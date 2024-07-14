@@ -10,7 +10,7 @@ body {
     margin: 0;
 }
 
-.app{
+.app {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -32,15 +32,15 @@ p {
 a {
     text-decoration: none;
     color: unset;
+
+    &.active {
+        text-decoration: underline;
+    }
 }
 
 img,
 embed,
 video,
 object {
-    max-width: 100%
-}
-
-a.active {
-    text-decoration: underline;
+    max-width: 100%;
 }

@@ -1,0 +1,21 @@
+.toy-filter {
+    background-color: $clr2;
+    padding: 1em;
+    border-radius: 10px;
+
+    form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    @media (max-width: 600px) {
+        form>* {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            margin-bottom: 5px;
+        }
+    }
+}

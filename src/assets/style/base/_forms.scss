@@ -1,0 +1,14 @@
+button {
+    &:hover {
+        background-color: #00595a;
+        color: white;
+        transition: 0.3s;
+    }
+}
+
+input {
+    &:focus {
+        background-color: white;
+        transition: background-color 1s;
+    }
+}

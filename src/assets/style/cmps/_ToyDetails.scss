@@ -1,0 +1,40 @@
+.toy-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    h1 {
+        font-size: 2em;
+    }
+
+    h5 {
+        font-size: 1em;
+    }
+
+    img {
+        max-width: 200px;
+        display: block;
+        margin: auto;
+    }
+
+    .btn {
+        width: 100px;
+    }
+}
+
+.toy-labels {
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        display: inline-block;
+        background-color: #f0f0f0;
+        padding: 5px 10px;
+        margin-right: 5px;
+        border-radius: 15px;
+        font-size: 0.9em;
+    }
+}
