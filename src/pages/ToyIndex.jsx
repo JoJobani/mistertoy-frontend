@@ -13,11 +13,16 @@ export function ToyIndex() {
     const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
 
     useEffect(() => {
-        loadToys()
-            .catch(err => {
-                showErrorMsg('Cannot load toys')
-            })
+        awaitLoad()
     }, [filterBy, sortBy])
+
+    async function awaitLoad() {
+        try {
+            await loadToys()
+        } catch {
+            showErrorMsg('Cannot load toys')
+        }
+    }
 
     function onSetFilter(filterBy) {
         setFilterBy(filterBy)
@@ -27,16 +32,15 @@ export function ToyIndex() {
         setSortBy(sortBy)
     }
 
-    function onRemoveToy(toyId) {
+    async function onRemoveToy(toyId) {
         if (!confirm('Are you sure?')) return
-        removeToyOptimistic(toyId)
-            .then(() => {
-                loadToys()
-                showSuccessMsg('Toy removed')
-            })
-            .catch(err => {
-                showErrorMsg('Cannot remove toy')
-            })
+        try {
+            await removeToyOptimistic(toyId)
+            await loadToys()
+            showSuccessMsg('Toy removed')
+        } catch (err) {
+            showErrorMsg('Cannot remove toy')
+        }
     }
 
     return (

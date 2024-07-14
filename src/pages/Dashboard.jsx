@@ -2,21 +2,12 @@ import { toyService } from "../services/toy.service.js"
 import { useSelector } from "react-redux"
 import { Bar, Pie } from 'react-chartjs-2'
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js'
-import { loadToys } from "../store/actions/toy.actions.js"
-import { useEffect } from "react"
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement)
 
 export function Dashboard() {
     const toys = useSelector(storeState => storeState.toyModule.toys)
     const labels = toyService.getToyLabels()
-
-    useEffect(() => {
-        loadToys()
-            .catch(err => {
-                showErrorMsg('Cannot load toys')
-            })
-    }, [])
 
     const priceData = {
         labels: labels,

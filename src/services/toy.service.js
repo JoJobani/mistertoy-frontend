@@ -55,7 +55,7 @@ function getEmptyToy() {
         name: '',
         price: '',
         labels: [],
-        isAvailable: true
+        inStock: true
     }
 }
 

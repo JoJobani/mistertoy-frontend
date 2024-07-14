@@ -7,11 +7,16 @@ export function AppFooter() {
     const toyCount = useSelector(storeState => storeState.toyModule.toys.length)
 
     useEffect(() => {
-        loadToys()
-            .catch(err => {
-                showErrorMsg('Cannot load toys')
-            })
+        awaitLoad()
     }, [toyCount])
+
+    async function awaitLoad() {
+        try {
+            await loadToys()
+        } catch {
+            showErrorMsg('Cannot load toys')
+        }
+    }
 
     return (
         <footer className="app-footer">
@@ -20,6 +25,4 @@ export function AppFooter() {
             <UserMsg />
         </footer>
     )
-
-
 }

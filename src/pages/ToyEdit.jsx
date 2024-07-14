@@ -23,20 +23,20 @@ export function ToyEdit() {
     const [toyToEdit, setToyToEdit] = useState(toyService.getEmptyToy())
     const { toyId } = useParams()
 
-
     const labels = toyService.getToyLabels()
 
     useEffect(() => {
         if (toyId) loadToy()
     }, [toyId])
 
-    function loadToy() {
-        toyService.getById(toyId)
-            .then(setToyToEdit)
-            .catch(err => {
-                console.log('Had issue in toy edit loading ', err)
-                navigate('/toy')
-            })
+    async function loadToy() {
+        try {
+            let toy = await toyService.getById(toyId)
+            setToyToEdit(toy)
+        } catch (err) {
+            console.log('Had issue in toy edit loading ', err)
+            navigate('/toy')
+        }
     }
 
     const ToySchema = Yup.object().shape({
@@ -49,19 +49,17 @@ export function ToyEdit() {
             .min(1, 'Price must be at least 1')
     })
 
-    function onSaveToy(values, { setSubmitting }) {
-        saveToy(values)
-            .then(() => {
-                showSuccessMsg('Toy saved!')
-                navigate(`/toy/${toyId}`)
-            })
-            .catch(err => {
-                console.log('Had issue in saving toy ', err)
-                showErrorMsg('Had issues in toy edit')
-            })
-            .finally(() => {
-                setSubmitting(false)
-            })
+    async function onSaveToy(values, { setSubmitting }) {
+        try {
+            let newToy = await saveToy(values)
+            showSuccessMsg('Toy saved!')
+            navigate(`/toy/${newToy._id}`)
+        } catch (err) {
+            console.log('Had issue in saving toy ', err)
+            showErrorMsg('Had issues in toy edit')
+        } finally {
+            setSubmitting(false)
+        }
     }
 
     if (toyId && toyToEdit._id !== toyId) return <div>Loading...</div>
@@ -103,9 +101,9 @@ export function ToyEdit() {
                             multiple
                             id="labels"
                             options={labels}
-                            value={toyToEdit.labels}
+                            value={values.labels}
                             onChange={(ev, newLabels) => {
-                                setToyToEdit(prevToy => ({ ...prevToy, labels: newLabels }));
+                                setFieldValue("labels", newLabels);
                             }}
                             getOptionLabel={(option) => option.toString()}
                             disableCloseOnSelect
