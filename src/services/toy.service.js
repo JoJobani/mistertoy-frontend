@@ -68,7 +68,7 @@ function getDefaultFilter() {
 }
 
 function getDefaultSort() {
-    return { type: '', desc: 1 }
+    return { sortBy: '', desc: true }
 }
 
 function getToyLabels() {

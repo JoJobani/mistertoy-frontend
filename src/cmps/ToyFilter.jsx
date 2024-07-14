@@ -35,7 +35,7 @@ export function ToyFilter({ filterBy, onSetFilter, sortBy, onSetSort }) {
         setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }))
     }
 
-    const { txt, inStock, maxPrice } = filterByToEdit
+    const { txt, inStock, maxPrice, labels } = filterByToEdit
 
     return (
         <section className="toy-filter">
@@ -88,7 +88,7 @@ export function ToyFilter({ filterBy, onSetFilter, sortBy, onSetSort }) {
                     disableCloseOnSelect
                     onChange={(event, newLabels) =>
                         handleChange({ target: { name: 'labels', value: newLabels } })}
-                    value={filterByToEdit.labels || []}
+                    value={labels || []}
                     renderOption={(props, option, { selected }) => {
                         const { key, ...optionProps } = props;
                         return (
