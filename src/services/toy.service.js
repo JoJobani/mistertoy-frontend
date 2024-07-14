@@ -7,7 +7,7 @@ const STORAGE_KEY = 'toyDB'
 const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle',
     'Outdoor', 'Battery Powered']
 
-_createToys()
+// _createToys()
 
 export const toyService = {
     query,
@@ -23,31 +23,31 @@ export const toyService = {
 }
 
 function query(filterBy = {}, sortBy) {
-    // return httpService.get(BASE_URL, { filterBy, sortBy })
-    return storageService.query(STORAGE_KEY)
+    return httpService.get(BASE_URL, { filterBy, sortBy })
+    // return storageService.query(STORAGE_KEY)
 }
 
 function getById(toyId) {
-    // return httpService.get(BASE_URL + toyId)
-    return storageService.get(STORAGE_KEY, toyId)
+    return httpService.get(BASE_URL + toyId)
+    // return storageService.get(STORAGE_KEY, toyId)
 }
 
 function remove(toyId) {
-    // return httpService.delete(BASE_URL + toyId)
-    return storageService.remove(STORAGE_KEY, toyId)
+    return httpService.delete(BASE_URL + toyId)
+    // return storageService.remove(STORAGE_KEY, toyId)
 }
 
 function save(toy) {
-    // if (toy._id) {
-    //     return httpService.put(BASE_URL, toy)
-    // } else {
-    //     return httpService.post(BASE_URL, toy)
-    // }
     if (toy._id) {
-        return storageService.put(STORAGE_KEY, toy)
+        return httpService.put(BASE_URL, toy)
     } else {
-        return storageService.post(STORAGE_KEY, toy)
+        return httpService.post(BASE_URL, toy)
     }
+    // if (toy._id) {
+    //     return storageService.put(STORAGE_KEY, toy)
+    // } else {
+    //     return storageService.post(STORAGE_KEY, toy)
+    // }
 }
 
 function getEmptyToy() {
