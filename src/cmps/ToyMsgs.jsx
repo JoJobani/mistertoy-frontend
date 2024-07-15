@@ -14,16 +14,6 @@ export function ToyMsgs({ toy }) {
     const [msg, setMsg] = useState(getEmptyMsg())
     const user = useSelector(storeState => storeState.userModule.loggedinUser)
 
-    async function onAddToyMsg() {
-        try {
-            await toyService.addToyMsg(toy._id, utilService.makeLorem(8))
-            showSuccessMsg(`toy msg added`)
-        } catch (err) {
-            console.log(err)
-            showErrorMsg('Cannot add toy msg ')
-        }
-    }
-
     async function onRemoveMsg(msgId) {
         await toyService.removeToyMsg(toy._id, msgId)
         showSuccessMsg('Msg removed!')
@@ -37,20 +27,27 @@ export function ToyMsgs({ toy }) {
 
     async function onSaveMsg(ev) {
         ev.preventDefault()
-        const savedMsg = await toyService.addMsg(toy._id, msg.txt)
-        setToy((prevToy) => ({
-            ...prevToy,
-            msgs: [...(prevToy.msgs || []), savedMsg],
-        }))
+        await toyService.addToyMsg(toy._id, msg.txt)
         setMsg(getEmptyMsg())
         showSuccessMsg('Msg saved!')
     }
 
     return (
         <section className="toy-msgs">
+            <h2>Messages:</h2>
             {user &&
-                <button onClick={() => { onAddToyMsg(toy._id) }}>Add toy msg</button>
-            }            <ul>
+                <form>
+                    <input
+                        type="text"
+                        onChange={handleMsgChange}
+                        onSubmit={onSaveMsg}
+                        name="txt"
+                        value={msg.txt}
+                        placeholder="Type message..."
+                    />
+                </form>
+            }
+            <ul>
                 {toy.msgs &&
                     toy.msgs.map((msg) => (
                         <li key={msg.id}>
