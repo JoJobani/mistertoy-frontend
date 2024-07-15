@@ -16,6 +16,8 @@ export const toyService = {
     getToyLabels,
     getLabelPriceSum,
     getLabelStock,
+    addToyMsg,
+    removeToyMsg,
     createRandToy
 }
 
@@ -89,6 +91,14 @@ function getLabelStock(toys) {
         })
     })
     return labels.map(label => labelStock[label])
+}
+
+async function addToyMsg(toyId, txt) {
+    return await httpService.post(`toy/${toyId}/msg`, { txt })
+}
+
+async function removeToyMsg(toyId, msgId) {
+    return await httpService.delete(`toy/${toyId}/msg/${msgId}`)
 }
 
 function createRandToy() {
