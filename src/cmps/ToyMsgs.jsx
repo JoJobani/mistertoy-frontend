@@ -25,11 +25,7 @@ export function ToyMsgs({ toy }) {
     }
 
     async function onRemoveMsg(msgId) {
-        const removedMsgId = await toyService.removeToyMsg(toy._id, msgId)
-        setToy((prevToy) => ({
-            ...prevToy,
-            msgs: prevToy.msgs.filter((msg) => removedMsgId !== msg.id),
-        }))
+        await toyService.removeToyMsg(toy._id, msgId)
         showSuccessMsg('Msg removed!')
     }
 
