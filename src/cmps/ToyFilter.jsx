@@ -59,7 +59,7 @@ export function ToyFilter({ filterBy, onSetFilter, sortBy, onSetSort }) {
                     variant="outlined"
                     type="number"
                     onChange={handleChange}
-                    value={maxPrice || ''}
+                    value={maxPrice}
                     size="small"
                 />
 

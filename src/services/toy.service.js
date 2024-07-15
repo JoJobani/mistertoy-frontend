@@ -63,7 +63,8 @@ function getDefaultFilter() {
     return {
         txt: '',
         maxPrice: '',
-        labels: []
+        labels: [],
+        inStock: ''
     }
 }
 
