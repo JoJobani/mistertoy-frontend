@@ -11,6 +11,7 @@ export function ToyIndex() {
     const filterBy = useSelector(storeState => storeState.toyModule.filterBy)
     const sortBy = useSelector(storeState => storeState.toyModule.sortBy)
     const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
+    const user = useSelector(storeState => storeState.userModule.loggedinUser)
 
     useEffect(() => {
         awaitLoad()
@@ -45,14 +46,15 @@ export function ToyIndex() {
 
     return (
         <main className="toy-index">
-            <Button
-                variant="contained"
-                href="/toy/edit"
-                color="secondary"
-                sx={{ width: "fit-content" }}
-            >
-                Add toy
-            </Button>
+            {user && user.isAdmin &&
+                <Button
+                    variant="contained"
+                    href="/toy/edit"
+                    color="secondary"
+                    sx={{ width: "fit-content" }}
+                >
+                    Add toy
+                </Button>}
             <ToyFilter
                 filterBy={filterBy}
                 onSetFilter={onSetFilter}

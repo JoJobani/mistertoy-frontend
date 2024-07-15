@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
-
+import { useSelector } from "react-redux"
 import { toyService } from "../services/toy.service.js"
 
 export function ToyDetails() {
     const navigate = useNavigate()
     const [toy, setToy] = useState(null)
     const { toyId } = useParams()
+    const user = useSelector(storeState => storeState.userModule.loggedinUser)
 
     useEffect(() => {
         if (toyId) loadToy()
@@ -40,8 +41,8 @@ export function ToyDetails() {
 
             <h3>{toy.inStock ? 'Toy in stock!' : 'Toy currently not in stock'}</h3>
 
-            <Link to={`/toy/edit/${toy._id}`} className="btn">Edit</Link>
-            <Link to={`/toy`} className="btn">Back</Link>
+            {user && user.isAdmin &&
+                <Link to={`/toy/edit/${toy._id}`} className="btn">Edit</Link>}            <Link to={`/toy`} className="btn">Back</Link>
         </section>
     )
 

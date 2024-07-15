@@ -1,13 +1,9 @@
 import { utilService } from './util.service.js'
 import { httpService } from './http.service.js'
-import { storageService } from './async-storage.service.js'
 
 const BASE_URL = 'toy/'
-const STORAGE_KEY = 'toyDB'
 const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle',
     'Outdoor', 'Battery Powered']
-
-// _createToys()
 
 export const toyService = {
     query,
@@ -19,22 +15,20 @@ export const toyService = {
     getDefaultSort,
     getToyLabels,
     getLabelPriceSum,
-    getLabelStock
+    getLabelStock,
+    createRandToy
 }
 
 function query(filterBy = {}, sortBy) {
     return httpService.get(BASE_URL, { filterBy, sortBy })
-    // return storageService.query(STORAGE_KEY)
 }
 
 function getById(toyId) {
     return httpService.get(BASE_URL + toyId)
-    // return storageService.get(STORAGE_KEY, toyId)
 }
 
 function remove(toyId) {
     return httpService.delete(BASE_URL + toyId)
-    // return storageService.remove(STORAGE_KEY, toyId)
 }
 
 function save(toy) {
@@ -43,11 +37,6 @@ function save(toy) {
     } else {
         return httpService.post(BASE_URL, toy)
     }
-    // if (toy._id) {
-    //     return storageService.put(STORAGE_KEY, toy)
-    // } else {
-    //     return storageService.post(STORAGE_KEY, toy)
-    // }
 }
 
 function getEmptyToy() {
@@ -102,6 +91,17 @@ function getLabelStock(toys) {
     return labels.map(label => labelStock[label])
 }
 
+function createRandToy() {
+    return {
+        _id: utilService.makeId(),
+        name: utilService.makeLorem(2),
+        price: utilService.getRandomIntInclusive(10, 500),
+        labels: _getRandomLabels(),
+        createdAt: Date.now(),
+        inStock: true
+    }
+}
+
 function _getRandomLabels() {
     const labelsCopy = [...labels]
     const randomLabels = []
@@ -112,24 +112,3 @@ function _getRandomLabels() {
     return randomLabels
 }
 
-function _createToys() {
-    let toys = utilService.loadFromStorage(STORAGE_KEY)
-    if (!toys || !toys.length) {
-        toys = []
-        for (let i = 0; i < 10; i++) {
-            toys.push(_createRandToy())
-        }
-        utilService.saveToStorage(STORAGE_KEY, toys)
-    }
-}
-
-function _createRandToy() {
-    return {
-        _id: utilService.makeId(),
-        name: utilService.makeLorem(2),
-        price: utilService.getRandomIntInclusive(10, 500),
-        labels: _getRandomLabels(),
-        createdAt: Date.now(),
-        inStock: true
-    }
-}
