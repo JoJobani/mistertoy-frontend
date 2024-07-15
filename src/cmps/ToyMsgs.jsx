@@ -3,6 +3,9 @@ import { useState } from "react"
 import { toyService } from "../services/toy.service.js"
 import { useSelector } from "react-redux"
 
+import IconButton from '@mui/material/IconButton'
+import DeleteIcon from '@mui/icons-material/Delete'
+
 function getEmptyMsg() {
     return {
         txt: '',
@@ -61,9 +64,11 @@ export function ToyMsgs({ toy }) {
                             {msg.by.fullname} - {msg.txt}
                             {user &&
                                 (user.isAdmin || user._id === msg.by._id) &&
-                                <button type="button" onClick={() => onRemoveMsg(msg.id)}>
-                                    X
-                                </button>}
+                                <IconButton
+                                    size="small"
+                                    onClick={() => onRemoveMsg(msg.id)}>
+                                    <DeleteIcon />
+                                </IconButton>}
                         </li>
                     ))}
             </ul>

@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react"
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { toyService } from "../services/toy.service.js"
 import { ToyMsgs } from "../cmps/ToyMsgs.jsx"
+
+import Button from '@mui/material/Button'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 export function ToyDetails() {
     const navigate = useNavigate()
@@ -27,6 +30,18 @@ export function ToyDetails() {
     if (!toy) return <div>Loading...</div>
     return (
         <section className="toy-details">
+            <div className="back-btn">
+                <Button
+                    variant="text"
+                    startIcon={<ArrowBackIcon />}
+                    onClick={() => navigate(-1)}
+                    sx={{
+                        color: '#000000',
+                        '&:hover': { color: '#000000' }
+                    }}>
+                    Back
+                </Button>
+            </div>
             <h1>{toy.name}</h1>
             <h3>Price: <span>${toy.price.toLocaleString()}</span></h3>
             <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illo laboriosam sunt vero, vitae ducimus ullam quis explicabo neque quam voluptate numquam quibusdam repellendus veniam saepe? Molestias, assumenda! Similique, praesentium facilis?</p>
@@ -39,13 +54,19 @@ export function ToyDetails() {
                     ))}
                 </ul>
             </div>
-
-            <h3>{toy.inStock ? 'Toy in stock!' : 'Toy currently not in stock'}</h3>
+            <h3 className={toy.inStock ? 'green' : 'red'}>{toy.inStock ?
+                'Toy in stock!' :
+                'Toy currently not in stock'}</h3>
             {user && user.isAdmin &&
-                <Link to={`/toy/edit/${toy._id}`} className="btn">Edit</Link>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    size="small"
+                    href={`/toy/edit/${toy._id}`}>
+                    Edit toy
+                </Button>
             }
-            <Link to={`/toy`} className="btn">Back</Link>
-            <ToyMsgs toy={toy}/>
+            <ToyMsgs toy={toy} />
         </section>
     )
 
