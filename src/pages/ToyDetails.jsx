@@ -88,18 +88,20 @@ export function ToyDetails() {
                 <Link to={`/toy/edit/${toy._id}`} className="btn">Edit</Link>
             }
             <Link to={`/toy`} className="btn">Back</Link>
-            <button onClick={() => { onAddToyMsg(toy._id) }}>Add toy msg</button>
-            <ul>
-                {toy.msgs &&
-                    toy.msgs.map((msg) => (
-                        <li key={msg.id}>
-                            By: {msg.by.fullname} - {msg.txt}
-                            <button type="button" onClick={() => onRemoveMsg(msg.id)}>
-                                X
-                            </button>
-                        </li>
-                    ))}
-            </ul>
+            <section className="toy-msgs">
+                <button onClick={() => { onAddToyMsg(toy._id) }}>Add toy msg</button>
+                <ul>
+                    {toy.msgs &&
+                        toy.msgs.map((msg) => (
+                            <li key={msg.id}>
+                                By: {msg.by.fullname} - {msg.txt}
+                                <button type="button" onClick={() => onRemoveMsg(msg.id)}>
+                                    X
+                                </button>
+                            </li>
+                        ))}
+                </ul>
+            </section>
         </section>
     )
 
