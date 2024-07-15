@@ -2,7 +2,6 @@ import { showSuccessMsg, showErrorMsg } from "../services/event-bus.service.js"
 import { useState } from "react"
 import { toyService } from "../services/toy.service.js"
 import { useSelector } from "react-redux"
-import { utilService } from "../services/util.service.js"
 
 function getEmptyMsg() {
     return {
@@ -15,8 +14,12 @@ export function ToyMsgs({ toy }) {
     const user = useSelector(storeState => storeState.userModule.loggedinUser)
 
     async function onRemoveMsg(msgId) {
-        await toyService.removeToyMsg(toy._id, msgId)
-        showSuccessMsg('Msg removed!')
+        try {
+            await toyService.removeToyMsg(toy._id, msgId)
+            showSuccessMsg('Message removed!')
+        } catch (err) {
+            showErrorMsg('Couldnt remove message')
+        }
     }
 
     function handleMsgChange(ev) {
@@ -27,9 +30,13 @@ export function ToyMsgs({ toy }) {
 
     async function onSaveMsg(ev) {
         ev.preventDefault()
-        await toyService.addToyMsg(toy._id, msg.txt)
-        setMsg(getEmptyMsg())
-        showSuccessMsg('Msg saved!')
+        try {
+            await toyService.addToyMsg(toy._id, msg.txt)
+            setMsg(getEmptyMsg())
+            showSuccessMsg('Message saved!')
+        } catch (err) {
+            showErrorMsg('Couldnt add message')
+        }
     }
 
     return (
