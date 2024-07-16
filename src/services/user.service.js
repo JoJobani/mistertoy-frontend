@@ -9,7 +9,8 @@ export const userService = {
     signup,
     getLoggedinUser,
     getById,
-    getUsers
+    getUsers,
+    getEmptyUser
 }
 
 //For debugging
@@ -46,4 +47,13 @@ function getUsers() {
 
 function getById(userId) {
     return storageService.get(BASE_URL, userId)
+}
+
+function getEmptyUser() {
+    return {
+        username: '',
+        password: '',
+        fullname: '',
+        isAdmin: false
+    }
 }
