@@ -30,7 +30,7 @@ export function ToyMsgs({ toy }) {
         ev.preventDefault()
         try {
             await toyService.addToyMsg(toy._id, msg.txt)
-            setMsg(getEmptyMsg())
+            setMsg(utilService.getEmptyMsg())
             showSuccessMsg('Message saved!')
         } catch (err) {
             showErrorMsg('Couldnt add message')
@@ -41,11 +41,11 @@ export function ToyMsgs({ toy }) {
         <section className="toy-texts">
             <h2>Messages:</h2>
             {user &&
-                <form>
+                <form
+                    onSubmit={onSaveMsg}>
                     <input
                         type="text"
                         onChange={handleMsgChange}
-                        onSubmit={onSaveMsg}
                         name="txt"
                         value={msg.txt}
                         placeholder="Type message..."

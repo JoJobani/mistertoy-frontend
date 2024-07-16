@@ -1,6 +1,5 @@
 import { showSuccessMsg, showErrorMsg } from "../services/event-bus.service.js"
 import { useEffect, useState } from "react"
-import { toyService } from "../services/toy.service.js"
 import { useSelector } from "react-redux"
 import { utilService } from "../services/util.service.js"
 import { reviewService } from "../services/review.service.js"
@@ -59,11 +58,11 @@ export function ToyReviews({ toy }) {
         <section className="toy-texts">
             <h2>Reviews:</h2>
             {user &&
-                <form>
+                <form
+                    onSubmit={onSaveReview}>
                     <input
                         type="text"
                         onChange={handleReviewChange}
-                        onSubmit={onSaveReview}
                         name="txt"
                         value={review.txt}
                         placeholder="Type review..."
@@ -74,9 +73,9 @@ export function ToyReviews({ toy }) {
             <ul>
                 {!!reviews.length && reviews.map((review) => (
                     <li key={review._id}>
-                        By: {review.by.fullname}, {review.txt}
+                        By: {review.byUser.fullname}, {review.txt}
                         {user &&
-                            (user.isAdmin || user._id === review.by._id) &&
+                            (user.isAdmin || user._id === review.byUser._id) &&
                             <IconButton
                                 size="small"
                                 onClick={() => onRemoveReview(review._id)}>

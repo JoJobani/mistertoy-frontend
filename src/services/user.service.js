@@ -7,7 +7,9 @@ export const userService = {
     login,
     logout,
     signup,
-    getLoggedinUser
+    getLoggedinUser,
+    getById,
+    getUsers
 }
 
 //For debugging
@@ -36,4 +38,12 @@ function getLoggedinUser() {
 function _setLoggedinUser(user) {
     sessionStorage.setItem(STORAGE_KEY_LOGIN, JSON.stringify(user))
     return user
+}
+
+function getUsers() {
+    return httpService.get(`user`)
+}
+
+function getById(userId) {
+    return storageService.get(BASE_URL, userId)
 }

@@ -9,6 +9,7 @@ import { About } from './pages/About.jsx'
 import { ToyIndex } from './pages/ToyIndex.jsx'
 import { ToyEdit } from './pages/ToyEdit.jsx'
 import { ToyDetails } from './pages/ToyDetails.jsx'
+import { ReviewExplore } from './pages/ReviewExplore.jsx'
 import { Dashboard } from './pages/Dashboard.jsx'
 
 import '../src/assets/style/main.scss'
@@ -27,6 +28,7 @@ export function App() {
               <Route element={<ToyEdit />} path='/toy/edit' />
               <Route element={<ToyEdit />} path='/toy/edit/:toyId' />
               <Route element={<ToyDetails />} path='/toy/:toyId' />
+              <Route element={<ReviewExplore />} path='/review' />
               <Route element={<Dashboard />} path='/dashboard' />
             </Routes>
           </main>

@@ -5,7 +5,9 @@ export const utilService = {
     loadFromStorage,
     saveToStorage,
     animateCSS,
-    debounce
+    debounce,
+    getEmptyMsg,
+    getEmptyReview
 }
 
 function makeId(length = 6) {
