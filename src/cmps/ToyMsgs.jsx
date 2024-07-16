@@ -2,18 +2,13 @@ import { showSuccessMsg, showErrorMsg } from "../services/event-bus.service.js"
 import { useState } from "react"
 import { toyService } from "../services/toy.service.js"
 import { useSelector } from "react-redux"
+import { utilService } from "../services/util.service.js"
 
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 
-function getEmptyMsg() {
-    return {
-        txt: '',
-    }
-}
-
 export function ToyMsgs({ toy }) {
-    const [msg, setMsg] = useState(getEmptyMsg())
+    const [msg, setMsg] = useState(utilService.getEmptyMsg())
     const user = useSelector(storeState => storeState.userModule.loggedinUser)
 
     async function onRemoveMsg(msgId) {
@@ -43,7 +38,7 @@ export function ToyMsgs({ toy }) {
     }
 
     return (
-        <section className="toy-msgs">
+        <section className="toy-texts">
             <h2>Messages:</h2>
             {user &&
                 <form>
@@ -54,23 +49,23 @@ export function ToyMsgs({ toy }) {
                         name="txt"
                         value={msg.txt}
                         placeholder="Type message..."
+                        required
                     />
                 </form>
             }
             <ul>
-                {toy.msgs &&
-                    toy.msgs.map((msg) => (
-                        <li key={msg.id}>
-                            {msg.by.fullname} - {msg.txt}
-                            {user &&
-                                (user.isAdmin || user._id === msg.by._id) &&
-                                <IconButton
-                                    size="small"
-                                    onClick={() => onRemoveMsg(msg.id)}>
-                                    <DeleteIcon />
-                                </IconButton>}
-                        </li>
-                    ))}
+                {toy.msgs && toy.msgs.map((msg) => (
+                    <li key={msg.id}>
+                        {msg.by.fullname} - {msg.txt}
+                        {user &&
+                            (user.isAdmin || user._id === msg.by._id) &&
+                            <IconButton
+                                size="small"
+                                onClick={() => onRemoveMsg(msg.id)}>
+                                <DeleteIcon />
+                            </IconButton>}
+                    </li>
+                ))}
             </ul>
         </section>
     )

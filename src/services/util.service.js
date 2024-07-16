@@ -71,3 +71,15 @@ function debounce(func, timeout = 300) {
         }, timeout)
     }
 }
+
+function getEmptyMsg() {
+    return {
+        txt: '',
+    }
+}
+
+function getEmptyReview() {
+    return {
+        txt: '',
+    }
+}
