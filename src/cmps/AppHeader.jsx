@@ -32,13 +32,14 @@ export function AppHeader() {
         const pathToIndex = {
             '/about': 0,
             '/toy': 1,
-            '/dashboard': 2
+            '/review': 2,
+            '/dashboard': 3
         }
         return pathToIndex[path] !== undefined ? pathToIndex[path] : false
     }
 
     const handleChange = (event, newTab) => {
-        const paths = ['/about', '/toy', '/dashboard']
+        const paths = ['/about', '/toy', 'review', '/dashboard']
         navigate(paths[newTab])
     }
 
@@ -56,7 +57,11 @@ export function AppHeader() {
             </Link>
             {user && (
                 <section>
-                    <p>Welcome back {user.fullname}</p>
+                    <Link
+                        to={'/user'}
+                        className="user-btn">
+                        <p>Welcome back {user.fullname}</p>
+                    </Link>
                     <button onClick={onLogout}>Logout</button>
                 </section>
             )}
@@ -79,6 +84,9 @@ export function AppHeader() {
                         sx={{ color: 'white', '&.Mui-selected': { color: 'white' } }} />
                     <Tab
                         label="Toys"
+                        sx={{ color: 'white', '&.Mui-selected': { color: 'white' } }} />
+                    <Tab
+                        label="Reviews"
                         sx={{ color: 'white', '&.Mui-selected': { color: 'white' } }} />
                     <Tab
                         label="Dashboard"
