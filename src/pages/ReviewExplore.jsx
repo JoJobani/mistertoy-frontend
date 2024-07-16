@@ -5,6 +5,9 @@ import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { loadUsers } from '../store/actions/user.actions'
 import { reviewService } from '../services/review.service'
 
+import IconButton from '@mui/material/IconButton'
+import DeleteIcon from '@mui/icons-material/Delete'
+
 export function ReviewExplore() {
   const users = useSelector((storeState) => storeState.userModule.users)
   const loggedInUser = useSelector((storeState) => storeState.userModule.loggedinUser)
@@ -18,8 +21,6 @@ export function ReviewExplore() {
   useEffect(() => {
     loadReviews()
   }, [filterBy])
-
-
 
   async function loadReviews() {
     try {
@@ -52,15 +53,14 @@ export function ReviewExplore() {
 
   return (
     <div className='review-explore'>
-      <h1>Reviews and Gossip</h1>
+      <h1>Reviews index</h1>
 
       {users && loggedInUser && (
         <form >
           <select
             onChange={handleChange}
             value={filterBy.byUserId}
-            name='byUserId'
-          >
+            name='byUserId'>
             <option value=''>Select User</option>
             {users.map((user) => (
               <option key={user._id} value={user._id}>
@@ -74,27 +74,23 @@ export function ReviewExplore() {
         <ul className='review-list'>
           {reviews.map((review) => (
             <li key={review._id}>
-              {canRemove(review) && (
-                <button onClick={() => onRemove(review._id)}>X</button>
-              )}
-              <p>
-                About:
+              <p>{review.txt}</p>
+              <p>Toy:
                 <Link to={`/toy/${review.aboutToy._id}`}>
                   {review.aboutToy.name}
-                </Link>
-              </p>
-              <h3>{review.txt}</h3>
-              <p>
-                By:
-                {review.byUser.fullname}
-              </p>
+                </Link></p>
+              <p>{review.byUser.fullname}</p>
+              {canRemove(review) &&
+                <IconButton
+                  size="small"
+                  onClick={() => onRemove(review._id)}>
+                  <DeleteIcon />
+                </IconButton>}
             </li>
           ))}
         </ul>
       )}
-
       {!reviews.length && <section>no reviews to show</section>}
-
       <hr />
     </div>
   )
