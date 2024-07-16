@@ -4,6 +4,7 @@ import { useSelector } from "react-redux"
 import { toyService } from "../services/toy.service.js"
 import { ToyMsgs } from "../cmps/ToyMsgs.jsx"
 import { ToyReviews } from "../cmps/ToyReviews.jsx"
+import { ChatRoom } from "../cmps/ChatRoom.jsx"
 
 import Button from '@mui/material/Button'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
@@ -67,6 +68,7 @@ export function ToyDetails() {
                     Edit toy
                 </Button>
             }
+            <ChatRoom toy={toy} />
             <ToyReviews toy={toy} />
             <ToyMsgs toy={toy} />
         </section>

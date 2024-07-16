@@ -41,8 +41,7 @@ export function ToyMsgs({ toy }) {
         <section className="toy-texts">
             <h2>Messages:</h2>
             {user &&
-                <form
-                    onSubmit={onSaveMsg}>
+                <form onSubmit={onSaveMsg}>
                     <input
                         type="text"
                         onChange={handleMsgChange}
