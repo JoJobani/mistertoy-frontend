@@ -10,7 +10,7 @@ export function ToyIndex() {
     const toys = useSelector(storeState => storeState.toyModule.toys)
     const filterBy = useSelector(storeState => storeState.toyModule.filterBy)
     const sortBy = useSelector(storeState => storeState.toyModule.sortBy)
-    const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
+    const isLoading = useSelector(storeState => storeState.systemModule.isLoading)
     const user = useSelector(storeState => storeState.userModule.loggedinUser)
 
     useEffect(() => {

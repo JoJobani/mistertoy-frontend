@@ -1,4 +1,5 @@
 import { toyService } from "../../services/toy.service.js"
+import { LOADING_DONE, LOADING_START } from "../reducers/system.reducer.js";
 import {
     ADD_TOY,
     UPDATE_TOY,
@@ -6,14 +7,12 @@ import {
     SET_TOYS,
     TOY_UNDO,
     SET_FILTER_BY,
-    SET_SORT_BY,
-    SET_IS_LOADING,
-
+    SET_SORT_BY
 } from "../reducers/toy.reducer.js"
 import { store } from "../store.js"
 
 export async function loadToys() {
-    store.dispatch({ type: SET_IS_LOADING, isLoading: true })
+    store.dispatch({ type: LOADING_START })
     try {
         const { filterBy, sortBy } = store.getState().toyModule
         let toys = await toyService.query(filterBy, sortBy)
@@ -22,7 +21,7 @@ export async function loadToys() {
         console.log('toy action -> Cannot load toys ', err)
         throw err
     } finally {
-        store.dispatch({ type: SET_IS_LOADING, isLoading: false })
+        store.dispatch({ type: LOADING_DONE })
     }
 }
 
