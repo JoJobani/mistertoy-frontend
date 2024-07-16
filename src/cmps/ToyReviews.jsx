@@ -58,8 +58,7 @@ export function ToyReviews({ toy }) {
         <section className="toy-texts">
             <h2>Reviews:</h2>
             {user &&
-                <form
-                    onSubmit={onSaveReview}>
+                <form onSubmit={onSaveReview}>
                     <input
                         type="text"
                         onChange={handleReviewChange}
@@ -73,12 +72,12 @@ export function ToyReviews({ toy }) {
             <ul>
                 {!!reviews.length && reviews.map((review) => (
                     <li key={review._id}>
-                        By: {review.byUser.fullname}, {review.txt}
+                        {review.byUser.fullname} - {review.txt}
                         {user &&
                             (user.isAdmin || user._id === review.byUser._id) &&
                             <IconButton
                                 size="small"
-                                onClick={() => onRemoveReview(review._id)}>
+                                onClick={() => onRemoveReview(msg.id)}>
                                 <DeleteIcon />
                             </IconButton>}
                     </li>
