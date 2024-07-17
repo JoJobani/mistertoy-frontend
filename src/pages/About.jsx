@@ -2,7 +2,7 @@ import { useState } from "react"
 import Button from '@mui/material/Button'
 import GoogleMapReact from "google-map-react"
 
-const API_KEY = import.meta.env.GOOGLE_MAP_API || 'AIzaSyBmOoIOdOQXCXs0HDPk0OzBpCCRDWwE3qQ'
+const API_KEY = 'API_KEY'
 const Marker = ({ loc }) => <div className="marker">{loc}</div>;
 
 export function About() {
